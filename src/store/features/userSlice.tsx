@@ -10,6 +10,7 @@ export type CurrentUser = {
   first_name: string;
   last_name: string;
   role: UserRole;
+  isAuth: boolean;
 };
 
 const initState: CurrentUser = {
@@ -20,6 +21,7 @@ const initState: CurrentUser = {
     _id: "",
     role_description: "",
   },
+  isAuth: false,
 };
 
 export const UserSlice = createSlice({
@@ -32,6 +34,7 @@ export const UserSlice = createSlice({
       state.last_name = action.payload.last_name;
       state.role._id = action.payload.role._id;
       state.role.role_description = action.payload.role.role_description;
+      state.isAuth = true;
     },
   },
 });

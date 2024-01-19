@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 const passportConfig = require("./passport.config");
 
 //Routes
+const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const roleRoutes = require("./routes/roleRoutes");
 const classificationRoutes = require("./routes/classificationRoutes");
@@ -22,7 +23,7 @@ const typeRoutes = require("./routes/typeRoutes");
 const itemRoutes = require("./routes/itemRoutes");
 
 //Controllers
-const userController = require("./controllers/UserController");
+const authController = require("./controllers/AuthController");
 
 //Environmental Variables
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -49,7 +50,7 @@ app.use(
 app.use(
   session({
     secret: SECRET,
-    cookie: { maxAge: 60 * 1000 * 60, httpOnly: true, signed: true },
+    cookie: { maxAge: 60 * 1000, httpOnly: true, signed: true },
     saveUninitialized: false,
     resave: false,
     store: MongoStore.create({
@@ -65,16 +66,17 @@ app.use(passport.session());
 passportConfig(passport);
 
 //Route Middleware
-app.use("/api", userRoutes);
-app.use("/api/role", userController.isAuth, roleRoutes);
-app.use("/api/classification", userController.isAuth, classificationRoutes);
-app.use("/api/item", userController.isAuth, itemRoutes);
-app.use("/api/labor", userController.isAuth, laborRoutes);
-app.use("/api/material", userController.isAuth, materialRoutes);
-app.use("/api/shop", userController.isAuth, shopRoutes);
-app.use("/api/status", userController.isAuth, statusRoutes);
-app.use("/api/ticket", userController.isAuth, ticketRoutes);
-app.use("/api/type", userController.isAuth, typeRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/user", authController.isAuth, userRoutes);
+app.use("/api/role", authController.isAuth, roleRoutes);
+app.use("/api/classification", authController.isAuth, classificationRoutes);
+app.use("/api/item", authController.isAuth, itemRoutes);
+app.use("/api/labor", authController.isAuth, laborRoutes);
+app.use("/api/material", authController.isAuth, materialRoutes);
+app.use("/api/shop", authController.isAuth, shopRoutes);
+app.use("/api/status", authController.isAuth, statusRoutes);
+app.use("/api/ticket", authController.isAuth, ticketRoutes);
+app.use("/api/type", authController.isAuth, typeRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server Started at ${PORT}`);

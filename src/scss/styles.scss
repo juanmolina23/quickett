@@ -1,6 +1,37 @@
 @import 'bootstrap/scss/bootstrap';
 
+$purple: #6E07F3;
 
 .pt-60px {
     padding-top: 60px !important;
+}
+
+.appContainer{
+    margin-top: 54px !important;
+}
+
+.bg-purple {
+    background-color: $purple;
+}
+
+.text-purple{
+    color: $purple;
+}
+
+.loginPage {
+    height: 100vh;
+    background-color: $purple;
+}
+
+.purple-underline{
+    text-decoration-color: $purple;
+    text-decoration-thickness: 5px; 
+}
+
+.btn-purple {
+    @include button-variant($purple, darken($purple, 7.5%), darken($purple, 10%), lighten($purple,5%), lighten($purple, 10%), darken($purple,30%));
+}
+
+.btn-outline-purple {
+    @include button-outline-variant($purple, #fff, lighten($purple,5%), $purple);
 }

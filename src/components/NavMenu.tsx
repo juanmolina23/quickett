@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { useAppSelector } from "../store/store";
 
 const NavMenu = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
+  const currentUser = useAppSelector((state) => state.user);
   return (
     <Navbar
       expanded={expanded}
@@ -24,9 +26,15 @@ const NavMenu = () => {
             </Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link as={NavLink} to='/login'>
-              Login
-            </Nav.Link>
+            {currentUser.isAuth ? (
+              <Nav.Link as={NavLink} to='/logout'>
+                Logout
+              </Nav.Link>
+            ) : (
+              <Nav.Link as={NavLink} to='/login'>
+                Login
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
