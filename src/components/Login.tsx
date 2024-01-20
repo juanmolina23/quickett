@@ -115,9 +115,11 @@ const Login = () => {
           setError(() => {
             return { hasError: false, errorMessage: "" };
           });
+          localStorage.setItem("isAuth", "true");
           dispatch(setCurrentUser(res.data!));
-          navigate("/dashboard");
+          navigate("/");
         } else {
+          localStorage.setItem("isAuth", "false");
           setShowSpinner(false);
           setError(() => {
             return { hasError: true, errorMessage: res.message };
@@ -130,10 +132,10 @@ const Login = () => {
   };
 
   return (
-    <div className='appContainer loginPage d-flex align-items-center'>
+    <div className='h-100vh bg-purple d-flex align-items-center'>
       <Container className='appContainer'>
         <Row className='row d-flex justify-content-center'>
-          <Col lg={6}>
+          <Col lg={4}>
             <Card className='shadow-lg'>
               <Card.Body>
                 <Form noValidate>

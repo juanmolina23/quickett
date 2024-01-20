@@ -5,7 +5,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import Login from "./components/Login";
-import NavMenu from "./components/NavMenu";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
 import APICall from "./classes/APICall";
@@ -43,29 +42,32 @@ function App() {
       );
       if (res.message != "User Is Not Authenticated") {
         dispatch(setCurrentUser(res.data!));
+        localStorage.setItem("isAuth", "true");
+      } else {
+        localStorage.setItem("isAuth", "false");
       }
     } catch (err) {
       console.log(err);
     }
   }
 
-  useEffect(() => {
-    isUserLoggedIn();
-  }, []);
+  isUserLoggedIn();
 
   return (
     <Router>
-      <NavMenu />
       <Routes>
         <Route
           path='/login'
           element={
-            currentUser.isAuth ? <Navigate to='/dashboard' /> : <Login />
+            localStorage.getItem("isAuth") == "true" ? (
+              <Navigate to='/' />
+            ) : (
+              <Login />
+            )
           }
         />
         <Route element={<ProtectedRoute />}>
-          <Route path='/' element={<h1>Home</h1>} />
-          <Route element={<Dashboard />} path='/dashboard' />
+          <Route path='/' element={<Dashboard />} />
         </Route>
       </Routes>
     </Router>

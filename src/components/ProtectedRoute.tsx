@@ -4,7 +4,11 @@ import { useAppSelector } from "../store/store";
 const ProtectedRoute = () => {
   const currentUser = useAppSelector((state) => state.user);
 
-  return currentUser.isAuth ? <Outlet /> : <Navigate to='/login' />;
+  return localStorage.getItem("isAuth") == "true" ? (
+    <Outlet />
+  ) : (
+    <Navigate to='/login' />
+  );
 };
 
 export default ProtectedRoute;

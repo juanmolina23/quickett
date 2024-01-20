@@ -50,7 +50,7 @@ app.use(
 app.use(
   session({
     secret: SECRET,
-    cookie: { maxAge: 60 * 1000, httpOnly: true, signed: true },
+    cookie: { maxAge: 60 * 1000 * 60, httpOnly: true, signed: true },
     saveUninitialized: false,
     resave: false,
     store: MongoStore.create({
